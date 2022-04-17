@@ -17,9 +17,6 @@ before_install:
     - gcloud container clusters get-credentials multi-cluster
     - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
     - docker build -t laszloforgacs/react-test -f ./client/Dockerfile.dev ./client
-on:
-    branch: main
-    tags: true
 
 script:
     - docker run -e CI=true laszloforgacs/react-test npm test
@@ -27,6 +24,9 @@ script:
 deploy:
     -   provider: script
         script: bash ./deploy.sh
+        on:
+            branch: main
+            tags: true
     -   provider: releases
         api_key: $TRAVIS_MULTI_GITHUB_TOKEN
         name: "Build $(date +'%d.%m.%Y %R')"
