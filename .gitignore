@@ -1,2 +1,4 @@
 
 .DS_Store
+./k8s/dash-admin-user.yaml
+./k8s/dash-clusterrole.yaml
